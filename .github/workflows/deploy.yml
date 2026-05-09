@@ -1,0 +1,31 @@
+name: Deploy Website via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate required secrets
+        run: |
+          test -n "${{ secrets.FTP_SERVER }}" || { echo "FTP_SERVER is missing"; exit 1; }
+          test -n "${{ secrets.FTP_USERNAME }}" || { echo "FTP_USERNAME is missing"; exit 1; }
+          test -n "${{ secrets.FTP_PASSWORD }}" || { echo "FTP_PASSWORD is missing"; exit 1; }
+
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./
+          server-dir: public_html/

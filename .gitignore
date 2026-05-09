@@ -1,0 +1,13 @@
+# Sensitive files
+*.env
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+.env.local
+.env.*.local
+credentials.json
+
+# Zip files
+*.zip
