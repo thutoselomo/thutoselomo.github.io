@@ -205,6 +205,7 @@
           <h2>Fundraising Event 2026</h2>
           <p>Buy a Ticket & Stand a Chance to Win!</p>
         </div>
+        <p>The money we raise in this campaign will go towards providing nutritious meals for children in need.</p>
         
         <div class="row" data-aos="fade-up">
           <!-- R70 Air Fryer Card -->
@@ -318,35 +319,28 @@
   <!-- Register -->
   <script src="assets/js/register.js"></script>
 
-  <!-- Yoco Script -->
-  <script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js"></script>
+  <!-- Yoco Hosted Checkout -->
   <script type="text/javascript">
-    var yoco = new window.YocoSDK({
-      publicKey: 'pk_test_ed3c54a6gOol69qa7f45',
-    });
+    var yocoPaymentBaseUrl = 'https://pay.yoco.com/thuto-selomo-organization';
 
-    var checkoutButton = document.querySelector('#pay-button');
-    checkoutButton.addEventListener('click', function () {
-      yoco.showPopup({
-        amountInCents: 15000,
-        currency: 'ZAR',
-        name: 'Miss Beauty Expo',
-        description: 'Registration Fee',
-        callback: function (result) {
-          // This function returns a token that your server can use to capture a payment
-          if (result.error) {
-            const errorMessage = result.error.message;
-            document.querySelector('#fail').css('display', 'block')
-            document.querySelector('#stepTwo').css('display', 'none')
-          } else {
-            document.querySelector('#success').css('display', 'block')
-            document.querySelector('#stepTwo').css('display', 'none');
-          }
-          // In a real integration - you would now pass this chargeToken back to your
-          // server along with the order/basket that the customer has purchased.
-        }
-      })
-    });
+    function buildCheckoutReference(prize, quantity) {
+      var prizeCode = prize.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
+      var timestamp = Date.now();
+      var randomPart = Math.floor(1000 + Math.random() * 9000);
+      return 'TSO-' + prizeCode + '-' + quantity + '-' + timestamp + '-' + randomPart;
+    }
+
+    function startYocoHostedCheckout(prize, unitPrice, quantity) {
+      var totalAmount = (unitPrice * quantity).toFixed(2);
+      var reference = buildCheckoutReference(prize, quantity);
+
+      var checkoutUrl = new URL(yocoPaymentBaseUrl);
+      checkoutUrl.searchParams.set('amount', totalAmount);
+      checkoutUrl.searchParams.set('reference', reference);
+
+      sessionStorage.setItem('lastCheckoutReference', reference);
+      window.location.href = checkoutUrl.toString();
+    }
   </script>
   
 
@@ -383,26 +377,14 @@
     }
 
     function checkout(prize, unitPrice, quantityId) {
-      const quantity = parseInt(document.getElementById(quantityId).value);
-      const totalAmount = quantity * unitPrice;
-      
-      // Create checkout object
-      const checkoutData = {
-        prize: prize,
-        unitPrice: unitPrice,
-        quantity: quantity,
-        totalAmount: totalAmount
-      };
+      const quantity = parseInt(document.getElementById(quantityId).value, 10);
 
-      // Store in session storage for next page
-      sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
-      
-      // Show alert with summary
-      alert(`Proceeding to checkout:\n\nPrize: ${prize}\nQuantity: ${quantity}\nTotal: R${totalAmount}\n\nYou will be redirected to the payment page.`);
-      
-      // For now, redirect to event page or keep on same page
-      // You can integrate with payment gateway here
-      console.log('Checkout Data:', checkoutData);
+      if (!Number.isInteger(quantity) || quantity < 1) {
+        alert('Please enter a valid quantity (minimum 1).');
+        return;
+      }
+
+      startYocoHostedCheckout(prize, unitPrice, quantity);
     }
 
     // Update totals when quantity inputs are manually changed
