@@ -46,6 +46,130 @@
       transition: 0.4s;
       border-radius: 50px;
     }
+
+    /* Ticket Card Styles */
+    .ticket-card {
+      border: 2px solid #f39c12;
+      border-radius: 10px;
+      padding: 25px;
+      text-align: center;
+      background: #ffffff;
+      transition: transform 0.3s, box-shadow 0.3s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ticket-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+    }
+
+    .ticket-image {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      overflow: hidden;
+    }
+
+    .ticket-image-airfryer {
+      background-image: url('assets/img/events/air-fryer.jpeg');
+    }
+
+    .ticket-image-blender {
+      background-image: url('assets/img/events/blender.jpeg');
+    }
+
+    .ticket-image-toaster {
+      background-image: url('assets/img/events/toaster.jpeg');
+    }
+
+    .ticket-image-kettle {
+      background-image: url('assets/img/events/kettle.jpeg');
+    }
+
+    .ticket-price {
+      font-size: 36px;
+      font-weight: bold;
+      color: #f39c12;
+      margin-bottom: 10px;
+    }
+
+    .ticket-prize {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .ticket-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      gap: 10px;
+    }
+
+    .quantity-btn {
+      background: #f39c12;
+      border: none;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .quantity-btn:hover {
+      background: #e67e22;
+    }
+
+    .quantity-input {
+      width: 60px;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .checkout-btn {
+      background: #30851b;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .checkout-btn:hover {
+      background: #236f14;
+    }
+
+    .total-price {
+      font-size: 16px;
+      color: #f39c12;
+      font-weight: bold;
+      margin: 10px 0;
+    }
   </style>
 
 </head>
@@ -65,7 +189,7 @@
       <nav id="navbar" class="navbar nav-dark">
         <ul>
           <li><a class="nav-link scrollto" href="./index.html#hero">Home</a></li>
-          <li><a class="nav-link active" href="./event-1.html#about">Beauty Pageant 2022</a></li>
+          <li><a class="nav-link active" href="./event-1.html#about">Enter Prize draw</a></li>
          </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -74,69 +198,91 @@
   </header><!-- End Header -->
   <main>
     <br>
-  <!-- ======= Body Section ======= -->
-    <section id="body" class="about">
+    <!-- ======= Ticket Purchase Section ======= -->
+    <section id="ticket-section" class="about">
       <div class="container">
         <div class="section-title" data-aos="zoom-out">
-          <h2>December 2022</h2>
-          <p>Miss Beauty Expo Registration</p>
+          <h2>Fundraising Event 2026</h2>
+          <p>Buy a Ticket & Stand a Chance to Win!</p>
         </div>
-        <div class="row content" data-aos="fade-up">
-           <div class="col-lg-6">
+        
+        <div class="row" data-aos="fade-up">
+          <!-- R70 Air Fryer Card -->
+          <div class="col-lg-6 col-md-12 mb-4">
+            <div class="ticket-card">
+              <div class="ticket-image ticket-image-airfryer" aria-label="Air Fryer"></div>
+              <div class="ticket-price">R70</div>
+              <div class="ticket-prize">Air Fryer</div>
+              <div class="ticket-description">
+                <p>Gets you an entry to win a brand new air fryer!</p>
+              </div>
+              <div class="quantity-selector">
+                <button class="quantity-btn" onclick="decreaseQuantity('qty-airfryer', 70)">−</button>
+                <input type="number" id="qty-airfryer" class="quantity-input" value="1" min="1" max="100" data-price="70">
+                <button class="quantity-btn" onclick="increaseQuantity('qty-airfryer', 70)">+</button>
+              </div>
+              <div class="total-price" id="total-airfryer">Total: R70</div>
+              <button class="checkout-btn" onclick="checkout('Air Fryer', 70, 'qty-airfryer')">Go to Checkout</button>
+            </div>
+          </div>
 
-            <div id="stepOne">
-              <h3>Step 1: Your details</h3>
-              <p>
-                Please fill the form bellow with the relevant details and proceed to secure your spot.
-              </p>
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
+          <!-- R60 Smoothie Blender Card -->
+          <div class="col-lg-6 col-md-12 mb-4">
+            <div class="ticket-card">
+              <div class="ticket-image ticket-image-blender" aria-label="Smoothie Blender"></div>
+              <div class="ticket-price">R60</div>
+              <div class="ticket-prize">Smoothie Blender</div>
+              <div class="ticket-description">
+                <p>Gets you an entry to win a smoothie blender!</p>
               </div>
-              <div class="form-group mt-3">
-                <input type="number" class="form-control" name="age" id="age" placeholder="Your Age" required>
+              <div class="quantity-selector">
+                <button class="quantity-btn" onclick="decreaseQuantity('qty-blender', 60)">−</button>
+                <input type="number" id="qty-blender" class="quantity-input" value="1" min="1" max="100" data-price="60">
+                <button class="quantity-btn" onclick="increaseQuantity('qty-blender', 60)">+</button>
               </div>
-              <div class="my-3">
-                <p class="small">By registering, you are agreeing to our <a href="./event-1.html">rules, terms & conditions</a></p>
-              </div>
-              
-             <div class="loader text-center" style="display: none;">
-               <div style="font-size: 45px;"><i class="fa fa-spinner fa-spin"></i></div>
-               <div> Loading..</div>
-             </div>
+              <div class="total-price" id="total-blender">Total: R60</div>
+              <button class="checkout-btn" onclick="checkout('Smoothie Blender', 60, 'qty-blender')">Go to Checkout</button>
+            </div>
+          </div>
 
-              <div class="text-center"><button class="submit" id="register" type="submit">Register</button></div>
-            </form>
-           </div>
-          <div class="col-lg-6 pt-4 pt-lg-0">
-           <!-- Content -->
+          <!-- R50 Toaster Card -->
+          <div class="col-lg-6 col-md-12 mb-4">
+            <div class="ticket-card">
+              <div class="ticket-image ticket-image-toaster" aria-label="Toaster"></div>
+              <div class="ticket-price">R50</div>
+              <div class="ticket-prize">Toaster</div>
+              <div class="ticket-description">
+                <p>Gets you an entry to win a toaster!</p>
+              </div>
+              <div class="quantity-selector">
+                <button class="quantity-btn" onclick="decreaseQuantity('qty-toaster', 50)">−</button>
+                <input type="number" id="qty-toaster" class="quantity-input" value="1" min="1" max="100" data-price="50">
+                <button class="quantity-btn" onclick="increaseQuantity('qty-toaster', 50)">+</button>
+              </div>
+              <div class="total-price" id="total-toaster">Total: R50</div>
+              <button class="checkout-btn" onclick="checkout('Toaster', 50, 'qty-toaster')">Go to Checkout</button>
+            </div>
+          </div>
+
+          <!-- R30 Electric Kettle Card -->
+          <div class="col-lg-6 col-md-12 mb-4">
+            <div class="ticket-card">
+              <div class="ticket-image ticket-image-kettle" aria-label="Electric Kettle"></div>
+              <div class="ticket-price">R30</div>
+              <div class="ticket-prize">Electric Kettle</div>
+              <div class="ticket-description">
+                <p>Gets you an entry to win an electric kettle!</p>
+              </div>
+              <div class="quantity-selector">
+                <button class="quantity-btn" onclick="decreaseQuantity('qty-kettle', 30)">−</button>
+                <input type="number" id="qty-kettle" class="quantity-input" value="1" min="1" max="100" data-price="30">
+                <button class="quantity-btn" onclick="increaseQuantity('qty-kettle', 30)">+</button>
+              </div>
+              <div class="total-price" id="total-kettle">Total: R30</div>
+              <button class="checkout-btn" onclick="checkout('Electric Kettle', 30, 'qty-kettle')">Go to Checkout</button>
+            </div>
           </div>
         </div>
-        <div style="paddingTop: 60px; display: none" id="stepTwo">
-          <h3>Step 2: Pay the fee</h3>
-          <p>
-            Please click the button bellow to make the payment to secure your spot.
-          </p>
-          <div class="text-center">
-            <button style="margin: 0 auto;" id="pay-button" class="btn btn-primary">Pay R150</button>
-          </div>
-        </div>
-        <div style="padding: 60px; display: none" id="success" class="text-center">
-          <h3 style="color:green">Success - You have entered</h3>
-          <p>You should receive an email of confirmation and further instructions</p>
-        </div>
-        <div id="fail" style="padding: 60px; display: none" class="text-center">
-          <h3 style="color: red; padding: 60px">Failed - Transaction Unsuccessful</h3>
-          <p id="transaction-error"></p>
-        </div>
-        </div>
-          
-
       </div>
     </section>
   </main>
@@ -214,6 +360,67 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Ticket Purchase Functions -->
+  <script>
+    function increaseQuantity(inputId, price) {
+      const input = document.getElementById(inputId);
+      const totalId = 'total-' + inputId.split('-')[1];
+      input.value = parseInt(input.value) + 1;
+      updateTotal(inputId, price, totalId);
+    }
+
+    function decreaseQuantity(inputId, price) {
+      const input = document.getElementById(inputId);
+      const totalId = 'total-' + inputId.split('-')[1];
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+      updateTotal(inputId, price, totalId);
+    }
+
+    function updateTotal(inputId, price, totalId) {
+      const quantity = parseInt(document.getElementById(inputId).value);
+      const total = quantity * price;
+      document.getElementById(totalId).textContent = 'Total: R' + total;
+    }
+
+    function checkout(prize, unitPrice, quantityId) {
+      const quantity = parseInt(document.getElementById(quantityId).value);
+      const totalAmount = quantity * unitPrice;
+      
+      // Create checkout object
+      const checkoutData = {
+        prize: prize,
+        unitPrice: unitPrice,
+        quantity: quantity,
+        totalAmount: totalAmount
+      };
+
+      // Store in session storage for next page
+      sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+      
+      // Show alert with summary
+      alert(`Proceeding to checkout:\n\nPrize: ${prize}\nQuantity: ${quantity}\nTotal: R${totalAmount}\n\nYou will be redirected to the payment page.`);
+      
+      // For now, redirect to event page or keep on same page
+      // You can integrate with payment gateway here
+      console.log('Checkout Data:', checkoutData);
+    }
+
+    // Update totals when quantity inputs are manually changed
+    document.addEventListener('DOMContentLoaded', function() {
+      const quantityInputs = document.querySelectorAll('.quantity-input');
+      quantityInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          const price = parseInt(this.getAttribute('data-price'));
+          const inputId = this.id;
+          const totalId = 'total-' + inputId.split('-')[1];
+          updateTotal(inputId, price, totalId);
+        });
+      });
+    });
+  </script>
 
 </body>
 
