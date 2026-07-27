@@ -157,7 +157,7 @@
    */
   window.addEventListener('load', () => {
     let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer && typeof Isotope !== 'undefined') {
+    if (portfolioContainer) {
       let portfolioIsotope = new Isotope(portfolioContainer, {
         itemSelector: '.portfolio-item',
       });
@@ -175,9 +175,7 @@
           filter: this.getAttribute('data-filter')
         });
         portfolioIsotope.on('arrangeComplete', function() {
-          if (typeof AOS !== 'undefined' && typeof AOS.refresh === 'function') {
-            AOS.refresh()
-          }
+          AOS.refresh()
         });
       }, true);
     }
@@ -187,74 +185,66 @@
   /**
    * Initiate portfolio lightbox 
    */
-  if (typeof GLightbox !== 'undefined' && select('.portfolio-lightbox')) {
-    GLightbox({
-      selector: '.portfolio-lightbox'
-    });
-  }
+  const portfolioLightbox = GLightbox({
+    selector: '.portfolio-lightbox'
+  });
 
   /**
    * Portfolio details slider
    */
-  if (typeof Swiper !== 'undefined' && select('.portfolio-details-slider')) {
-    new Swiper('.portfolio-details-slider', {
-      speed: 400,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true
-      }
-    });
-  }
+  new Swiper('.portfolio-details-slider', {
+    speed: 400,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
 
   /**
    * Testimonials slider
    */
-  if (typeof Swiper !== 'undefined' && select('.testimonials-slider')) {
-    new Swiper('.testimonials-slider', {
-      speed: 600,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
+  new Swiper('.testimonials-slider', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
       },
-      slidesPerView: 'auto',
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true
-      },
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 20
-        },
 
-        1200: {
-          slidesPerView: 3,
-          spaceBetween: 20
-        }
+      1200: {
+        slidesPerView: 3,
+        spaceBetween: 20
       }
-    });
-  }
+    }
+  });
 
   /**
    * Animation on scroll
    */
   window.addEventListener('load', () => {
-    if (typeof AOS !== 'undefined') {
-      AOS.init({
-        duration: 1000,
-        easing: 'ease-in-out',
-        once: true,
-        mirror: false
-      })
-    }
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    })
   });
 
 })()
