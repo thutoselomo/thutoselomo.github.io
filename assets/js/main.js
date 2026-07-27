@@ -162,6 +162,10 @@
         itemSelector: '.portfolio-item',
       });
 
+      imagesLoaded(portfolioContainer, function() {
+        portfolioIsotope.layout();
+      });
+
       let portfolioFilters = select('#portfolio-flters li', true);
 
       on('click', '#portfolio-flters li', function(e) {
